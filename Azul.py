@@ -57,20 +57,15 @@ def joueur_choisit_contenaire_et_joue(compteur,table,lst_fabrique,motif,ax_motif
 
 def main():
     
-    #initialisation des variables
-    plancher_1=initialisation_plancher()
-    plancher_2=initialisation_plancher()
-
+    #initialisation
     mosaique_1=initialisation_mosaique()
     mosaique_2=initialisation_mosaique()
 
-    motif_1=initialisation_motif()
-    motif_2=initialisation_motif()
-
-    table=initialisation_table()
-
     sac_tuile=preparation_sac_tuile()
-    lst_fabrique=preparation_usines(sac_tuile)
+
+    plancher_1=[]
+    plancher_2=[]
+
 
     lst_joueur=demande_joueur_ordinateur()  #selection joueur
 
@@ -78,29 +73,49 @@ def main():
     #debut premier dessinage
     cree_fenetre(1200,600)
 
-    dessine_plateau(mosaique_1, mosaique_2, plancher_1, plancher_2, motif_1, motif_2, lst_fabrique,table)
-
-
     #fin dessinage
-    compteur=0    #variable servant a alterné entre les 2 joueurs
-    while not detecte_fin_manche(lst_fabrique, table):
+
+
+
+
+    while sac_tuile:
+            #initialisation des variables
+
+        compteur = qui_commence(plancher_1,plancher_2)
         
-        if compteur%2==0:
-            if lst_joueur[0]=="joueur":
-                compteur=joueur_choisit_contenaire_et_joue(compteur, table, lst_fabrique, motif_1, 200, 120, plancher_1, 100, 380)
-            else :
-                    compteur=ordinateur_choisit_contenaire_et_joue(compteur, table, lst_fabrique, motif_1,plancher_1 )
-            
+        plancher_1=initialisation_plancher()
+        plancher_2=initialisation_plancher()
 
+        motif_1=initialisation_motif()
+        motif_2=initialisation_motif()
 
-        elif compteur%2==1:
-            if lst_joueur[1]=="joueur":
-                compteur=joueur_choisit_contenaire_et_joue(compteur, table, lst_fabrique, motif_2, 900, 120, plancher_2, 800, 380)
-            else :
-                compteur=ordinateur_choisit_contenaire_et_joue(compteur, table, lst_fabrique, motif_2, plancher_2)
-            
+        table=initialisation_table()
+
+        lst_fabrique=preparation_usines(sac_tuile)
+
+        
+
         dessine_plateau(mosaique_1, mosaique_2, plancher_1, plancher_2, motif_1, motif_2, lst_fabrique,table)
-        
+
+
+        while not detecte_fin_manche(lst_fabrique, table):
+            
+            if compteur%2==0:
+                if lst_joueur[0]=="joueur":
+                    compteur=joueur_choisit_contenaire_et_joue(compteur, table, lst_fabrique, motif_1, 200, 120, plancher_1, 100, 380)
+                else :
+                        compteur=ordinateur_choisit_contenaire_et_joue(compteur, table, lst_fabrique, motif_1,plancher_1 )
+                    
+
+
+            elif compteur%2==1:
+                if lst_joueur[1]=="joueur":
+                    compteur=joueur_choisit_contenaire_et_joue(compteur, table, lst_fabrique, motif_2, 900, 120, plancher_2, 800, 380)
+                else :
+                    compteur=ordinateur_choisit_contenaire_et_joue(compteur, table, lst_fabrique, motif_2, plancher_2)
+                    
+            dessine_plateau(mosaique_1, mosaique_2, plancher_1, plancher_2, motif_1, motif_2, lst_fabrique,table)
+                
 
     attente_clic()
     ferme_fenetre()

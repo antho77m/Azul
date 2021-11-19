@@ -206,6 +206,14 @@ def valeur_differente_tuile_fabrique(fabrique,valeur):
                 lst.append(ligne)
     return lst
 
+def qui_commence(plateau_1,plateau_2):
+    if -1 in plateau_1:
+        return 0
+    elif -1 in plateau_2:
+        return 1
+    else:
+        return 0
+
 def complete_ligne(ligne_plateau,valeur,nombre_a_rajouter):
     '''
     rajoute le nombre de tuiles dans la ligne,et renvoie le nombre en surplus
