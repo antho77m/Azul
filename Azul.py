@@ -1,4 +1,4 @@
-#!/bin/python3
+#!/bin/python3 #juste un test
 from Azul_graph import *
 from Azul_sys import *
 
