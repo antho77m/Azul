@@ -26,20 +26,22 @@ def couleur_tuiles(tuile): #chaque fonction dessins utilise cette fonctions pour
 # ax et ay designe le coin haut gauche     #
 # de chaque element (sauf les ligne motif) #
 ############################################
-def dessine_plateau(mosaique_1,mosaique_2,plancher_1,plancher_2,motif_1,motif_2,lst_fabrique,table):
+def dessine_plateau(lst_fabrique,table,liste_donnee_joueur):
     dessine_fond()
-    
-    dessine_mosaique(mosaique_1,250,120)  #il faut garder un ecart de 40 entre A et B  et  C et D 
-    dessine_mosaique(mosaique_2,950,120)
 
     dessine_fabrique(lst_fabrique,100,0)
     dessine_table(table, 100, 450)
 
-    dessine_plancher(plancher_1,100,380)  #il faut garder un ecart de 50 entre A et B  et  C et D
-    dessine_plancher(plancher_2,800,380)
+    for i in range(len(liste_donnee_joueur)):
+        dessine_plancher(liste_donnee_joueur[i]['plancher'],\
+        liste_donnee_joueur[i]['coord_plancher'][0],liste_donnee_joueur[i]['coord_plancher'][1])
+        
+        dessine_mosaique(liste_donnee_joueur[i]['mosaique'],\
+        liste_donnee_joueur[i]['coord_mosaique'][0],liste_donnee_joueur[i]['coord_mosaique'][1])
+        
+        dessine_motif(liste_donnee_joueur[i]['motif'],\
+        liste_donnee_joueur[i]['coord_motif'][0],liste_donnee_joueur[i]['coord_motif'][1])
 
-    dessine_motif(motif_1,200,120)      
-    dessine_motif(motif_2,900,120)
 
     mise_a_jour()
 

@@ -58,15 +58,12 @@ def joueur_choisit_contenaire_et_joue(compteur,table,lst_fabrique,motif,ax_motif
 def main():
     
     #initialisation
-    mosaique_1=initialisation_mosaique()
-    mosaique_2=initialisation_mosaique()
+    nombre_joueur=demande_nbr_joueur()
+
+    liste_donnee_joueur=initialisation_donnees_joueurs(nombre_joueur)
 
     sac_tuile=preparation_sac_tuile()
-
-    plancher_1=[]
-    plancher_2=[]
-
-
+    
     lst_joueur=demande_joueur_ordinateur()  #selection joueur
 
     #fin initialisation
@@ -81,22 +78,15 @@ def main():
     while sac_tuile:
             #initialisation des variables
 
-        compteur = qui_commence(plancher_1,plancher_2)
-        
-        plancher_1=initialisation_plancher()
-        plancher_2=initialisation_plancher()
-
-        motif_1=initialisation_motif()
-        motif_2=initialisation_motif()
+        compteur = qui_commence(liste_donnee_joueur)
 
         table=initialisation_table()
 
         lst_fabrique=preparation_usines(sac_tuile)
 
-        
+        dessine_plateau(lst_fabrique,table,liste_donnee_joueur)
 
-        dessine_plateau(mosaique_1, mosaique_2, plancher_1, plancher_2, motif_1, motif_2, lst_fabrique,table)
-
+        #modification stoppé ici
 
         while not detecte_fin_manche(lst_fabrique, table):
             

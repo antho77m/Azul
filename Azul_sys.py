@@ -191,6 +191,33 @@ def ordinateur_choisit_contenaire_et_joue(compteur, table, lst_fabrique, motif, 
             table+=retour_joueur_joue
             return compteur + 1
 
+def demande_nombre_joueur():
+    print("combien de joueur voulez vous dans la partie ?")
+    return int(input())
+
+def initialisation_donnees_joueurs(nombre_joueur):
+    ''' 
+    initialise et regroupe les différente données des joueurs.
+    retourne une liste de dictionnaire,un dictionnaire regroupe
+    toute les information d'un seul joueur
+    '''
+    lst_coord_plancher=[(100,380),(800,380),(100,700),(800,700)]
+    lst_coord_mosaique=[(250,120),(950,120),(250,440),(950,440)]
+    lst_coord_motif=[(200,120),(900,120),(200,440),(950,440)]       #liste des coordonné a utilisé pour les fonction dessin,selon les joueur
+
+    lst_donnee_joueur=[]
+    for i in range(nombre_joueur):
+        donnee_joueur=dict()
+        donnee_joueur['coord_plancher']=lst_coord_plancher[i]
+        donnee_joueur['coord_mosaique']=lst_coord_plancher[i]
+        donnee_joueur['coord_motif']=lst_coord_plancher[i]
+        donnee_joueur['plancher']=initialisation_plancher()
+        donnee_joueur['motif']=initialisation_motif()
+        donnee_joueur['mosaique']=initialisation_mosaique
+        lst_donnee_joueur.append(donnee_joueur)
+    return lst_donnee_joueur
+
+
 
 def valeur_differente_tuile_fabrique(fabrique,valeur):
     ''' 
@@ -206,13 +233,15 @@ def valeur_differente_tuile_fabrique(fabrique,valeur):
                 lst.append(ligne)
     return lst
 
-def qui_commence(plateau_1,plateau_2):
-    if -1 in plateau_1:
-        return 0
-    elif -1 in plateau_2:
-        return 1
-    else:
-        return 0
+def qui_commence(liste_donnee_joueur):
+    ''' 
+    renvoie un nombre pour faire jouer le joueur qui doit commencer la nouvelle manche
+    '''
+    for i in range(len(liste_donnee_joueur)):
+        if -1 in liste_donnee_joueur[i]['plancher']: 
+            return i
+    return 0
+        
 
 def complete_ligne(ligne_plateau,valeur,nombre_a_rajouter):
     '''
@@ -224,8 +253,6 @@ def complete_ligne(ligne_plateau,valeur,nombre_a_rajouter):
     >>> print (ligne)
     [5, 5, 5, 5]
     '''
-    #if nombre_a_rajouter==0:
-    #           return nombre_a_rajouter
     for i in range(len(ligne_plateau)):
         if ligne_plateau[i]==0:
             ligne_plateau[i]=valeur
