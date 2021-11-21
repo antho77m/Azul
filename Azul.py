@@ -1,13 +1,11 @@
 #!/bin/python3 #juste un test
 from Azul_graph import *
 from Azul_sys import *
-
 #remarque :
 #le jeton pour savoir qui commence la nouvelle manche est couleur argent
 #Pour annuler le premier element choisit,il suffit de cliquer autre part pour le deselectionner
-#si l'utilisateur n'écrit pas bien joueur au début alors,il sera considéré comme un ordinateur
 
-def joueur_choisit_contenaire_et_joue(compteur,table,lst_fabrique,motif,ax_motif,ay_motif,plancher,ax_plancher,ay_plancher):
+def joueur_choisit_contenaire_et_joue(compteur,table,lst_fabrique,motif,coord_motif,plancher,coord_plancher):
     '''
     le joueur choisit les contenaires utilisé puis effectue l'action
 
@@ -20,9 +18,9 @@ def joueur_choisit_contenaire_et_joue(compteur,table,lst_fabrique,motif,ax_motif
         rang1=0
         premier_choix=False
         while not premier_choix :
-            coordonne=attente_clic()
-            a=detecte_co_souris_table(table, 100, 450, coordonne)
-            b=detecte_co_souris_fabrique(lst_fabrique,100,0,coordonne)
+            coordonne_souris=attente_clic()
+            a=detecte_co_souris_table(table, 100, 450, coordonne_souris)
+            b=detecte_co_souris_fabrique(lst_fabrique,100,0,coordonne_souris)
             if a!=-1:
                 premier_contenaire=table
                 rang1=a
@@ -35,9 +33,9 @@ def joueur_choisit_contenaire_et_joue(compteur,table,lst_fabrique,motif,ax_motif
         
         second_contenaire=0
         rang2=0
-        coordonne=attente_clic()
-        a=detecte_co_souris_motif(ax_motif,ay_motif,coordonne)
-        b=detecte_co_souris_plancher(ax_plancher,ay_plancher,coordonne)
+        coordonne_souris=attente_clic()
+        a=detecte_co_souris_motif(coord_motif[0],coord_motif[1],coordonne_souris)
+        b=detecte_co_souris_plancher(coord_plancher[0],coord_plancher[1],coordonne_souris)
         if a !=-1:                   #le joueur a toucher la ligne motif
             second_contenaire=motif[a]
             rang2=a
@@ -45,7 +43,7 @@ def joueur_choisit_contenaire_et_joue(compteur,table,lst_fabrique,motif,ax_motif
         elif b!=-1:                  #le joueur a toucher le plancher
             second_contenaire=plancher
             break        #le joueur a fait tout ses choix
-        dessine_plateau(mosaique_1, mosaique_2, plancher_1, plancher_2, motif_1, motif_2, lst_fabrique,table)
+        #dessine_plateau(mosaique_1, mosaique_2, plancher_1, plancher_2, motif_1, motif_2, lst_fabrique,table)
 
 
     retour_joueur_joue=joueur_joue(premier_contenaire, second_contenaire, plancher,rang1[0],rang1[1],rang1[2] ) #si la fonction ne ressort pas False ,on fait jouer le joueur suivant,sinon on refait jouer le meme joueur car le coup n'est pas permis
@@ -58,22 +56,17 @@ def joueur_choisit_contenaire_et_joue(compteur,table,lst_fabrique,motif,ax_motif
 def main():
     
     #initialisation
-    nombre_joueur=demande_nbr_joueur()
+    nombre_joueur=demande_nombre_joueur()
 
     liste_donnee_joueur=initialisation_donnees_joueurs(nombre_joueur)
 
     sac_tuile=preparation_sac_tuile()
     
-    lst_joueur=demande_joueur_ordinateur()  #selection joueur
-
     #fin initialisation
     #debut premier dessinage
-    cree_fenetre(1200,600)
+    cree_fenetre(1200,1000)
 
     #fin dessinage
-
-
-
 
     while sac_tuile:
             #initialisation des variables
@@ -86,26 +79,23 @@ def main():
 
         dessine_plateau(lst_fabrique,table,liste_donnee_joueur)
 
-        #modification stoppé ici
-
         while not detecte_fin_manche(lst_fabrique, table):
+            joueur=compteur%nombre_joueur
+            dessine_plateau(lst_fabrique, table, liste_donnee_joueur)
             
-            if compteur%2==0:
-                if lst_joueur[0]=="joueur":
-                    compteur=joueur_choisit_contenaire_et_joue(compteur, table, lst_fabrique, motif_1, 200, 120, plancher_1, 100, 380)
-                else :
-                        compteur=ordinateur_choisit_contenaire_et_joue(compteur, table, lst_fabrique, motif_1,plancher_1 )
+            if liste_donnee_joueur[joueur]['type_joueur']=="j":
+                compteur=joueur_choisit_contenaire_et_joue(compteur, table, lst_fabrique,\
+                                                           liste_donnee_joueur[joueur]['motif'],\
+                                                           liste_donnee_joueur[joueur]['coord_motif'],\
+                                                           liste_donnee_joueur[joueur]['plancher'],\
+                                                           liste_donnee_joueur[joueur]['coord_plancher'])
+            
+            
+            else :
+                compteur=ordinateur_choisit_contenaire_et_joue(compteur, table, lst_fabrique,\
+                                                               liste_donnee_joueur[joueur]['motif'],\
+                                                               liste_donnee_joueur[joueur]['plancher'])
                     
-
-
-            elif compteur%2==1:
-                if lst_joueur[1]=="joueur":
-                    compteur=joueur_choisit_contenaire_et_joue(compteur, table, lst_fabrique, motif_2, 900, 120, plancher_2, 800, 380)
-                else :
-                    compteur=ordinateur_choisit_contenaire_et_joue(compteur, table, lst_fabrique, motif_2, plancher_2)
-                    
-            dessine_plateau(mosaique_1, mosaique_2, plancher_1, plancher_2, motif_1, motif_2, lst_fabrique,table)
-                
 
     attente_clic()
     ferme_fenetre()

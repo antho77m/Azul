@@ -109,13 +109,14 @@ def preparation_usines(sac_tuile,nbr_usine=5):
         
     return lst_usine
 
-def demande_joueur_ordinateur():
+def demande_joueur_ordinateur(numero_joueur):
     '''demande a l'utilisateur si les joueurs seront des "ordinateur" ou de vrai joueur  '''
-    lst=[]
-    for i in range(2):
-        print("voulez vous que le joueur ",i+1," soit un joueur ou un ordinateur(joueur/ordinateur)")
-        lst.append(str(input()))
-    return lst
+    while True :
+        print("voulez vous que le joueur ",numero_joueur," soit un joueur ou un ordinateur(j/o)")
+        type_joueur=input()
+        if type_joueur=="j" or type_joueur=="o":
+            return type_joueur
+        print("veuillez mettre une reponse correcte")
 
 def fabrique_vide(lst_fabrique):
     ''' 
@@ -209,11 +210,12 @@ def initialisation_donnees_joueurs(nombre_joueur):
     for i in range(nombre_joueur):
         donnee_joueur=dict()
         donnee_joueur['coord_plancher']=lst_coord_plancher[i]
-        donnee_joueur['coord_mosaique']=lst_coord_plancher[i]
-        donnee_joueur['coord_motif']=lst_coord_plancher[i]
+        donnee_joueur['coord_mosaique']=lst_coord_mosaique[i]
+        donnee_joueur['coord_motif']=lst_coord_motif[i]
         donnee_joueur['plancher']=initialisation_plancher()
         donnee_joueur['motif']=initialisation_motif()
-        donnee_joueur['mosaique']=initialisation_mosaique
+        donnee_joueur['mosaique']=initialisation_mosaique()
+        donnee_joueur['type_joueur']=demande_joueur_ordinateur(i+1)
         lst_donnee_joueur.append(donnee_joueur)
     return lst_donnee_joueur
 
