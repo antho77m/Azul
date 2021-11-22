@@ -43,8 +43,7 @@ def joueur_choisit_contenaire_et_joue(compteur,table,lst_fabrique,motif,coord_mo
         elif b!=-1:                  #le joueur a toucher le plancher
             second_contenaire=plancher
             break        #le joueur a fait tout ses choix
-        #dessine_plateau(mosaique_1, mosaique_2, plancher_1, plancher_2, motif_1, motif_2, lst_fabrique,table)
-
+        dessine_fabrique_et_table(lst_fabrique, table)
 
     retour_joueur_joue=joueur_joue(premier_contenaire, second_contenaire, plancher,rang1[0],rang1[1],rang1[2] ) #si la fonction ne ressort pas False ,on fait jouer le joueur suivant,sinon on refait jouer le meme joueur car le coup n'est pas permis
     
@@ -61,7 +60,7 @@ def main():
     liste_donnee_joueur=initialisation_donnees_joueurs(nombre_joueur)
 
     sac_tuile=preparation_sac_tuile()
-    
+    compteur=0
     #fin initialisation
     #debut premier dessinage
     cree_fenetre(1200,1000)
@@ -69,14 +68,9 @@ def main():
     #fin dessinage
 
     while sac_tuile:
-            #initialisation des variables
-
-        compteur = qui_commence(liste_donnee_joueur)
-
         table=initialisation_table()
 
         lst_fabrique=preparation_usines(sac_tuile)
-
         dessine_plateau(lst_fabrique,table,liste_donnee_joueur)
 
         while not detecte_fin_manche(lst_fabrique, table):
@@ -95,7 +89,11 @@ def main():
                 compteur=ordinateur_choisit_contenaire_et_joue(compteur, table, lst_fabrique,\
                                                                liste_donnee_joueur[joueur]['motif'],\
                                                                liste_donnee_joueur[joueur]['plancher'])
-                    
+        dessine_plateau(lst_fabrique,table,liste_donnee_joueur)
+        sleep(1)
+        compteur = qui_commence(liste_donnee_joueur)
+        action_fin_manche(liste_donnee_joueur)
+
 
     attente_clic()
     ferme_fenetre()

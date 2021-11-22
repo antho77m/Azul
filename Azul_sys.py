@@ -174,7 +174,6 @@ def ordinateur_choisit_contenaire_et_joue(compteur, table, lst_fabrique, motif, 
     '''
     
     #l'ordinateur choisit quoi choisir
-    #Azul.attente_clic()
     sleep(0.5)
     while (True):
         rang1=0
@@ -192,8 +191,10 @@ def ordinateur_choisit_contenaire_et_joue(compteur, table, lst_fabrique, motif, 
             table+=retour_joueur_joue
             return compteur + 1
 
+
 def demande_nombre_joueur():
     print("combien de joueur voulez vous dans la partie ?")
+    
     return int(input())
 
 def initialisation_donnees_joueurs(nombre_joueur):
@@ -202,9 +203,9 @@ def initialisation_donnees_joueurs(nombre_joueur):
     retourne une liste de dictionnaire,un dictionnaire regroupe
     toute les information d'un seul joueur
     '''
-    lst_coord_plancher=[(100,380),(800,380),(100,700),(800,700)]
-    lst_coord_mosaique=[(250,120),(950,120),(250,440),(950,440)]
-    lst_coord_motif=[(200,120),(900,120),(200,440),(900,440)]       #liste des coordonné a utilisé pour les fonction dessin,selon les joueur
+    lst_coord_plancher=[(100,380),(800,380),(100,720),(800,720)]
+    lst_coord_mosaique=[(250,120),(950,120),(250,460),(950,460)]
+    lst_coord_motif=[(200,120),(900,120),(200,460),(900,460)]       #liste des coordonné a utilisé pour les fonction dessin,selon les joueur
 
     lst_donnee_joueur=[]
     for i in range(nombre_joueur):
@@ -216,6 +217,7 @@ def initialisation_donnees_joueurs(nombre_joueur):
         donnee_joueur['motif']=initialisation_motif()
         donnee_joueur['mosaique']=initialisation_mosaique()
         donnee_joueur['type_joueur']=demande_joueur_ordinateur(i+1)
+        donnee_joueur['score']=0
         lst_donnee_joueur.append(donnee_joueur)
     return lst_donnee_joueur
 
@@ -365,9 +367,35 @@ def joueur_joue(contenaire_1,contenaire_2,plancher,n,i,j):
 
         return []    
     return False
-    
-    
-    
+
+        ######################
+        # fonction utilisez  #
+        # apres une manche   #
+        ######################
+def vide_tout_plancher(donnee_joueur):
+    for e in donnee_joueur:
+        e['plancher']=initialisation_plancher()
+
+def ligne_motif_remplis(ligne):
+    return not(0 in ligne)
+
+def vide_ligne_motif(ligne):
+    for i in range(len(ligne)):
+        ligne[i]=0
+
+def vide_motif_tout__joueur(donnee_joueur):
+    for joueur in donnee_joueur:
+        for i in range(5):
+            if ligne_motif_remplis(joueur['motif'][i]):
+                vide_ligne_motif(joueur['motif'][i])
+
+def action_fin_manche(donnee_joueur):
+    #compte_point_tout_joueur(donnee_joueur)
+    vide_tout_plancher(donnee_joueur)
+    vide_motif_tout__joueur(donnee_joueur)
+
+
+
 if __name__=="__main__":
     #doctest.testmod()
     Azul.main()

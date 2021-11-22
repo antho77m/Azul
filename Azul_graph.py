@@ -29,8 +29,7 @@ def couleur_tuiles(tuile): #chaque fonction dessins utilise cette fonctions pour
 def dessine_plateau(lst_fabrique,table,liste_donnee_joueur):
     dessine_fond()
 
-    dessine_fabrique(lst_fabrique,100,0)
-    dessine_table(table, 100, 450)
+    dessine_fabrique_et_table(lst_fabrique, table)
 
     for i in range(len(liste_donnee_joueur)):
         dessine_plancher(liste_donnee_joueur[i]['plancher'],\
@@ -45,8 +44,13 @@ def dessine_plateau(lst_fabrique,table,liste_donnee_joueur):
 
     mise_a_jour()
 
+def dessine_fabrique_et_table(lst_fabrique,table):
+
+    dessine_fabrique(lst_fabrique,100,0)
+    dessine_table(table, 100, 450)
+
 def dessine_fond():
-    rectangle(0, 0, 1200, 600,"","grey")
+    rectangle(0, 0, 1200, 1000,"","grey")
     
 def dessine_une_fabrique(fabrique,ax,ay,n):
     bx=ax+40
