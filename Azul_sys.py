@@ -204,7 +204,7 @@ def initialisation_donnees_joueurs(nombre_joueur):
     '''
     lst_coord_plancher=[(100,380),(800,380),(100,700),(800,700)]
     lst_coord_mosaique=[(250,120),(950,120),(250,440),(950,440)]
-    lst_coord_motif=[(200,120),(900,120),(200,440),(950,440)]       #liste des coordonné a utilisé pour les fonction dessin,selon les joueur
+    lst_coord_motif=[(200,120),(900,120),(200,440),(900,440)]       #liste des coordonné a utilisé pour les fonction dessin,selon les joueur
 
     lst_donnee_joueur=[]
     for i in range(nombre_joueur):
