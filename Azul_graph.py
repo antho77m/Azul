@@ -10,7 +10,8 @@ def couleur_tuiles(tuile): #chaque fonction dessins utilise cette fonctions pour
     renvoie la couleur a la quelle la tuile correspond
     lance une exception si la valeur de la tuile n'est pas correcte
     '''
-    lst_couleurs=["white","red","blue","orange","green","black","red2","blue2","orange2","green2","grey9"]
+    #               Blanc,rouge,bleu,orange,vert,noir                      -> les suivante sont les meme couleur en plus clair
+    lst_couleurs=["#FFFFFF","#F00020","#0080FF","#FF7F00","#00561B","#000000","#FF0000","#ADD8E6","#DD7B40","#90EE90","#CECECE"]
     for i in range(len(lst_couleurs)):
         if i==tuile:
             return lst_couleurs[i]

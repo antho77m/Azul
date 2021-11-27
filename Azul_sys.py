@@ -155,9 +155,16 @@ def ordinateur_choisit_rang_fabrique():
     return(random.randint(0, 4),random.randint(0, 1),random.randint(0, 1))
 
 def ordinateur_choisit_contenaire_2(motif,plancher):
+    ''' 
+    returne le contenaire choisit 
+    ainsi que le rang de la ligne choisit correspondant a la ligne de la mosaique
+    étant donné que le plancher n'est pas associé a une des ligne de la mosaique
+    alors le rang est egal a -1
+
+    '''
     if random.randint(1, 6)!=1:
         rang=ordinateur_choisit_rang_motif()
-        return motif[rang]
+        return motif[rang],rang
     else:
         return plancher
 
@@ -166,7 +173,7 @@ def ordinateur_choisit_rang_motif():
 
 
 
-def ordinateur_choisit_contenaire_et_joue(compteur, table, lst_fabrique, motif, plancher):
+def ordinateur_choisit_contenaire_et_joue(compteur, table, lst_fabrique, motif, plancher,mosaique):
     '''
     le joueur choisit les contenaires utilisé puis effectue l'action
 
@@ -184,9 +191,17 @@ def ordinateur_choisit_contenaire_et_joue(compteur, table, lst_fabrique, motif, 
             rang1=ordinateur_choisit_rang_fabrique()
         second_contenaire=ordinateur_choisit_contenaire_2(motif, plancher)
             
+        if type(second_contenaire) == type(tuple()): 
+            #on execute se bout si le contenaire choisit est une ligne motif
+            retour_joueur_joue=joueur_joue(premier_contenaire, second_contenaire[0], plancher,rang1[0],rang1[1],rang1[2],mosaique[second_contenaire[1]] ) 
+            #si la fonction ne ressort pas False ,on fait jouer le joueur suivant,sinon on refait jouer le meme joueur car le coup n'est pas permis
+        else:
+            retour_joueur_joue=joueur_joue(premier_contenaire, second_contenaire, plancher,rang1[0],rang1[1],rang1[2]) 
+            #si la fonction ne ressort pas False ,on fait jouer le joueur suivant,sinon on refait jouer le meme joueur car le coup n'est pas permis
+        
+                    
 
-        retour_joueur_joue=joueur_joue(premier_contenaire, second_contenaire, plancher,rang1[0],rang1[1],rang1[2] ) #si la fonction ne ressort pas False ,on fait jouer le joueur suivant,sinon on refait jouer le meme joueur car le coup n'est pas permis
-                
+        
         if retour_joueur_joue!=False:       #si l'ordinateur a fait un coup correcte ...
             table+=retour_joueur_joue
             return compteur + 1
@@ -318,11 +333,12 @@ def supprime_toute_val_contenaire(contenaire,val):
 
 
 
-def joueur_joue(contenaire_1,contenaire_2,plancher,n,i,j):
+def joueur_joue(contenaire_1,contenaire_2,plancher,n,i,j,ligne_mosaique=[]):
     '''
-    fonction regroupant toute les sous fonction a faire apres que le joueur est sélection les 2 contenaire
+    fonction regroupant toute les sous fonction a faire apres que le joueur est sélectionner les 2 contenaires
 
-    le premier argument est forcément une fabrique ou la table 
+    le premier argument est soit une fabrique ou la table
+    tandis que le second est soit une ligne motif ou le plancher
     n= numero de la fabrique selectionner
     i=ligne de la tuile selectionner
     j=colonne de la tuile selectionner
@@ -334,12 +350,15 @@ def joueur_joue(contenaire_1,contenaire_2,plancher,n,i,j):
     if i!=-1 :   #valeur ajouter au tuples de la table, sert a différencier la table et la fabrique
         #code a effectuer si le contenaire choisit est la fabrique
         val_tuile_select=contenaire_1[n][i][j]
-        if val_tuile_select==0:
+        if val_tuile_select==0 or val_tuile_select in ligne_mosaique:
             return False            #si c'est une tuiles vide
-        elif len(contenaire_2)!=7:
+        elif len(contenaire_2)!=7: 
             if (not ligne_vide(contenaire_2) and contenaire_2.count(val_tuile_select)==0) \
-                or contenaire_2.count(val_tuile_select)==len(contenaire_2): 
-                return False    #il y a deja des tuiles d'une autre couleur dans la ligne motif ou le joueur veut mettre des tuiles de la meme couleurs dans une ligne remplis de cette couleur
+                or contenaire_2.count(val_tuile_select)==len(contenaire_2) : 
+                return False    #il y a deja des tuiles d'une autre couleur dans la ligne motif ou le joueur 
+                                #veut mettre des tuiles de la meme couleurs dans une ligne remplis de cette couleur
+                                #ou le joueur essaie de remplir une ligne avec une couleur deja remplie dans la mosaique
+            
         
         lst_autre_tuiles =valeur_differente_tuile_fabrique(contenaire_1[n], val_tuile_select)
         nbr_restant=4-len(lst_autre_tuiles)
@@ -351,6 +370,8 @@ def joueur_joue(contenaire_1,contenaire_2,plancher,n,i,j):
         return lst_autre_tuiles     #les met dans la table
     elif i==-1:
         val_tuile_select=contenaire_1[n]    #code a effectuer si le premier contenaire est la table
+        if val_tuile_select in ligne_mosaique:
+            return False
         if len(contenaire_2)!=7:
             if (not ligne_vide(contenaire_2) and contenaire_2.count(val_tuile_select)==0) \
                 or (val_tuile_select==-1 and len(contenaire_2)!=7) or contenaire_2.count(val_tuile_select)==len(contenaire_2)\
@@ -383,16 +404,33 @@ def vide_ligne_motif(ligne):
     for i in range(len(ligne)):
         ligne[i]=0
 
-def vide_motif_tout__joueur(donnee_joueur):
-    for joueur in donnee_joueur:
+def vide_motif_joueur(motif):
+    liste_ligne_videe_et_val=[]
+    for i in range(5):
+        if ligne_motif_remplis(motif[i]):
+            liste_ligne_videe_et_val.append((i,motif[i][0])) 
+            #stockage de la ligne supprimé ainsi que la valeur de la tuile
+            vide_ligne_motif(motif[i])
+    return liste_ligne_videe_et_val
+    
+def complete_mosaique(ligne_mosaique_maj,mosaique):
+    for e in ligne_mosaique_maj:    #pour chaque tuple dans la liste
+        val_tuile_correspondante=e[1]+5
         for i in range(5):
-            if ligne_motif_remplis(joueur['motif'][i]):
-                vide_ligne_motif(joueur['motif'][i])
+            num_ligne=e[0]
+            if mosaique[num_ligne][i]==val_tuile_correspondante:
+                mosaique[num_ligne][i]=e[1]
+                break
+
+def action_motif_tout_joueur(donnee_joueur):
+    for joueur in donnee_joueur:
+        ligne_mosaique_maj=vide_motif_joueur(joueur['motif'])
+        complete_mosaique(ligne_mosaique_maj,joueur['mosaique'])
 
 def action_fin_manche(donnee_joueur):
-    #compte_point_tout_joueur(donnee_joueur)
     vide_tout_plancher(donnee_joueur)
-    vide_motif_tout__joueur(donnee_joueur)
+    action_motif_tout_joueur(donnee_joueur)
+    #compte_point_tout_joueur(donnee_joueur)
 
 
 
