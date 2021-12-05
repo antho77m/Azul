@@ -1,60 +1,8 @@
-#!/bin/python3 #juste un test
+#!/bin/python3 
 from Azul_graph import *
 from Azul_sys import *
 #remarque :
-#le jeton pour savoir qui commence la nouvelle manche est couleur argent
 #Pour annuler le premier element choisit,il suffit de cliquer autre part pour le deselectionner
-
-def joueur_choisit_contenaire_et_joue(compteur,table,lst_fabrique,mosaique,motif,coord_motif,plancher,coord_plancher):
-    '''
-    le joueur choisit les contenaires utilisé puis effectue l'action
-
-    retourne le compteur(int)   celui si sert a faire jouer le prochain joueur
-    '''
-    
-    while True:         #le joueur choisit quoi choisir
-        
-        premier_contenaire=0
-        rang1=0
-        premier_choix=False
-        while not premier_choix :
-            coordonne_souris=attente_clic()
-            a=detecte_co_souris_table(table, 300, 450, coordonne_souris)
-            b=detecte_co_souris_fabrique(lst_fabrique,100,0,coordonne_souris)
-            if a!=-1:
-                premier_contenaire=table
-                rang1=a
-                premier_choix=True
-            if b!=-1:
-                premier_contenaire=lst_fabrique
-                rang1=b
-                premier_choix=True
-                
-        
-        second_contenaire=0
-        rang2=0
-        coordonne_souris=attente_clic()
-        a=detecte_co_souris_motif(coord_motif[0],coord_motif[1],coordonne_souris)
-        b=detecte_co_souris_plancher(coord_plancher[0],coord_plancher[1],coordonne_souris)
-        if a !=-1:                   #le joueur a toucher la ligne motif
-            second_contenaire=motif[a]
-            rang2=a
-            break       #le joueur a fait tout ses choix
-        elif b!=-1:                  #le joueur a toucher le plancher
-            second_contenaire=plancher
-            break        #le joueur a fait tout ses choix
-        dessine_fabrique_et_table(lst_fabrique, table)
-    if len(second_contenaire)!=7:
-        retour_joueur_joue=joueur_joue(premier_contenaire, second_contenaire, plancher,rang1[0],rang1[1],rang1[2],mosaique[a] ) 
-        #si la fonction ne ressort pas False ,on fait jouer le joueur suivant,sinon on refait jouer le meme joueur car le coup n'est pas permis
-    else:
-        retour_joueur_joue=joueur_joue(premier_contenaire, second_contenaire, plancher,rang1[0],rang1[1],rang1[2] ) 
-        #si la fonction ne ressort pas False ,on fait jouer le joueur suivant,sinon on refait jouer le meme joueur car le coup n'est pas permis
-    
-    if retour_joueur_joue!=False:       #si le joueur a fait un coup correcte ...
-        table+=retour_joueur_joue
-        compteur+=1
-    return compteur
 
 def main():
     
