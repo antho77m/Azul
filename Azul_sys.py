@@ -233,6 +233,7 @@ def initialisation_donnees_joueurs(nombre_joueur):
         donnee_joueur['mosaique']=initialisation_mosaique()
         donnee_joueur['type_joueur']=demande_joueur_ordinateur(i+1)
         donnee_joueur['score']=0
+        donnee_joueur['point_plancher_manche_pre']=0
         lst_donnee_joueur.append(donnee_joueur)
     return lst_donnee_joueur
 
@@ -423,15 +424,56 @@ def complete_mosaique(ligne_mosaique_maj,mosaique):
                 break
 
 def action_motif_tout_joueur(donnee_joueur):
+    #remplie la mosaique de tout les joueur ayant complété une ligne
     for joueur in donnee_joueur:
         ligne_mosaique_maj=vide_motif_joueur(joueur['motif'])
         complete_mosaique(ligne_mosaique_maj,joueur['mosaique'])
 
-def action_fin_manche(donnee_joueur):
-    vide_tout_plancher(donnee_joueur)
-    action_motif_tout_joueur(donnee_joueur)
-    #compte_point_tout_joueur(donnee_joueur)
+def compte_point_plancher(plancher,point_plancher):
+    #renvoit les point stocker dans le placher
+    equivalent_point_plancher=[-1,-1,-2,-2,-2,-3,-3]
+    
+    for i in range(len(plancher)):
+        if plancher[i]!=0 :
+            point_plancher+=equivalent_point_plancher[i]
+        else:
+            break
+    return point_plancher
 
+def tuile_remplie(tuile):
+    return tuile>0 and tuile<6
+
+def compte_point_mosaique(mosaique):
+    score=0
+    for i in range(len(mosaique)):
+        for j in range(len(mosaique)):
+            score+=int(tuile_remplie(mosaique[i][j]))
+    return score
+
+def compte_point_joueur(mosaique,plancher,point_plancher_manche_precedente):
+    #renvoit les point d'un joueur,ainsi que le joueur a perdu dans le plancher,depuis le debut de la partie
+    point_plancher=compte_point_plancher(plancher,point_plancher_manche_precedente)
+    point_mosaique=compte_point_mosaique(mosaique)
+    score=point_plancher+point_mosaique
+
+    return score
+
+def compte_point_tout_joueur(donnee_joueur):
+    #fonction comptant les point de tout les joueurs
+    for joueur in donnee_joueur:
+        joueur['score']=compte_point_joueur(joueur['mosaique'],joueur['plancher'],joueur['point_plancher_manche_pre'])
+
+def maj_point_plancher_tout_joueur(donnee_joueur):
+    for joueur in donnee_joueur:
+        joueur['point_plancher_manche_pre']+=compte_point_plancher(joueur['plancher'],joueur['point_plancher_manche_pre'])
+
+
+def action_fin_manche(donnee_joueur):
+    
+    action_motif_tout_joueur(donnee_joueur)
+    compte_point_tout_joueur(donnee_joueur)
+    maj_point_plancher_tout_joueur(donnee_joueur)
+    vide_tout_plancher(donnee_joueur)
 
 
 if __name__=="__main__":

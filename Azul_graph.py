@@ -10,8 +10,10 @@ def couleur_tuiles(tuile): #chaque fonction dessins utilise cette fonctions pour
     renvoie la couleur a la quelle la tuile correspond
     lance une exception si la valeur de la tuile n'est pas correcte
     '''
-    #               Blanc,rouge,bleu,orange,vert,noir                      -> les suivante sont les meme couleur en plus clair
-    lst_couleurs=["#FFFFFF","#F00020","#0080FF","#FF7F00","#00561B","#000000","#FF0000","#ADD8E6","#DD7B40","#90EE90","#CECECE"]
+    #               Blanc,rouge,bleu,orange,vert,noir                      
+    lst_couleurs=["#FFFFFF","#F00020","#0080FF","#FF7F00","#00561B","#000000",\
+                    #les suivante sont les meme couleur en plus clair
+                    "#FFB6C1","#ADD8E6","#DD7B40","#90EE90","#CECECE"]
     for i in range(len(lst_couleurs)):
         if i==tuile:
             return lst_couleurs[i]
@@ -34,13 +36,14 @@ def dessine_plateau(lst_fabrique,table,liste_donnee_joueur):
 
     for i in range(len(liste_donnee_joueur)):
         dessine_plancher(liste_donnee_joueur[i]['plancher'],\
-        liste_donnee_joueur[i]['coord_plancher'][0],liste_donnee_joueur[i]['coord_plancher'][1])
+            liste_donnee_joueur[i]['coord_plancher'][0],liste_donnee_joueur[i]['coord_plancher'][1])
         
         dessine_mosaique(liste_donnee_joueur[i]['mosaique'],\
-        liste_donnee_joueur[i]['coord_mosaique'][0],liste_donnee_joueur[i]['coord_mosaique'][1])
+            liste_donnee_joueur[i]['coord_mosaique'][0],liste_donnee_joueur[i]['coord_mosaique'][1])
         
-        dessine_motif(liste_donnee_joueur[i]['motif'],\
-        liste_donnee_joueur[i]['coord_motif'][0],liste_donnee_joueur[i]['coord_motif'][1])
+        dessine_motif_et_score(liste_donnee_joueur[i]['motif'],\
+            liste_donnee_joueur[i]['coord_motif'][0],liste_donnee_joueur[i]['coord_motif'][1],\
+            liste_donnee_joueur[i]['score'])
 
 
     mise_a_jour()
@@ -48,7 +51,7 @@ def dessine_plateau(lst_fabrique,table,liste_donnee_joueur):
 def dessine_fabrique_et_table(lst_fabrique,table):
 
     dessine_fabrique(lst_fabrique,100,0)
-    dessine_table(table, 100, 450)
+    dessine_table(table, 300, 450)
 
 def dessine_fond():
     rectangle(0, 0, 1200, 1000,"","grey")
@@ -113,16 +116,24 @@ def dessine_table(table,ax,ay):
         ax=ax+40
         bx=bx+40
         
-def dessine_motif(motif,ax,ay):
+def dessine_score_joueur(xa,ya,score,):
+    sj="score : " + str(score)
+    texte(xa,ya,sj,taille=12)
+
+def dessine_motif_et_score(motif,ax,ay,score):
     ''' 
-    dessine les lignes motif
+    dessine les lignes motif 
     ax et ay designe le coins haut gauche de la tuile la plus haute 
     
     '''
     bx=ax+40
     by=ay+40
+    
+    dessine_score_joueur(ax-150,ay+40,score)
+
     a=ax    #memoire pour revenir a la ligne
     b=bx    #memoire pour revenir a la ligne
+    
 
     for i in range(5):
         ay=ay+40

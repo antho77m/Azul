@@ -19,7 +19,7 @@ def joueur_choisit_contenaire_et_joue(compteur,table,lst_fabrique,mosaique,motif
         premier_choix=False
         while not premier_choix :
             coordonne_souris=attente_clic()
-            a=detecte_co_souris_table(table, 100, 450, coordonne_souris)
+            a=detecte_co_souris_table(table, 300, 450, coordonne_souris)
             b=detecte_co_souris_fabrique(lst_fabrique,100,0,coordonne_souris)
             if a!=-1:
                 premier_contenaire=table
@@ -79,6 +79,7 @@ def main():
 
         while not detecte_fin_manche(lst_fabrique, table):
             joueur=compteur%nombre_joueur
+            compte_point_tout_joueur(liste_donnee_joueur)
             dessine_plateau(lst_fabrique, table, liste_donnee_joueur)
             
             if liste_donnee_joueur[joueur]['type_joueur']=="j":
