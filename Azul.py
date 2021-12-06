@@ -19,7 +19,7 @@ def main():
 
     #fin dessinage
     
-    while sac_tuile:
+    while not condition_fin(sac_tuile,liste_donnee_joueur):
         table=initialisation_table()
 
         lst_fabrique=preparation_usines(sac_tuile)
