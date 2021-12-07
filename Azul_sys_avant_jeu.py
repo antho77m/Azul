@@ -89,16 +89,21 @@ def preparation_une_usine(sac_tuile):
     for i in range(2):
         ligne_usine=[]
         for j in range(2):
-            ligne_usine.append(sac_tuile.pop())
+            if sac_tuile:
+                ligne_usine.append(sac_tuile.pop())
+            else:
+                ligne_usine.append(0)
         usine.append(ligne_usine)
     return usine
 
 
-def preparation_usines(sac_tuile,nbr_usine=5):
+def preparation_usines(sac_tuile,nombre_joueur):
     '''prepare les differentes usines 
     >>> preparation_usines([2,3,5,4,1,1,1,2,3,5,6,6,8,4,5,1,2,3,5,5])
     [[[5, 5], [3, 2]], [[1, 5], [4, 8]], [[6, 6], [5, 3]], [[2, 1], [1, 1]], [[4, 5], [3, 2]]]
     '''
+    lst_nombre_usine=[0,5,7,9]
+    nbr_usine=lst_nombre_usine[nombre_joueur-1]
     lst_usine=[]
     for n in range(nbr_usine):
         lst_usine.append(preparation_une_usine(sac_tuile))

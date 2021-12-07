@@ -22,7 +22,7 @@ def main():
     while not condition_fin(sac_tuile,liste_donnee_joueur):
         table=initialisation_table()
 
-        lst_fabrique=preparation_usines(sac_tuile)
+        lst_fabrique=preparation_usines(sac_tuile,nombre_joueur)
         dessine_plateau(lst_fabrique,table,liste_donnee_joueur)
 
         while not detecte_fin_manche(lst_fabrique, table):

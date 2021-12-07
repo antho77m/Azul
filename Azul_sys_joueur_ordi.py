@@ -16,8 +16,8 @@ def ordinateur_choisit_contenaire_1(table,lst_fabrique):
 def ordinateur_choisit_rang_table(table):
     return (randint(0, len(table)-1),-1,-1)
 
-def ordinateur_choisit_rang_fabrique():
-    return(randint(0, 4),randint(0, 1),randint(0, 1))
+def ordinateur_choisit_rang_fabrique(nombre_fabrique):
+    return(randint(0, nombre_fabrique-1),randint(0, 1),randint(0, 1))
 
 def ordinateur_choisit_contenaire_2(motif,plancher):
     ''' 
@@ -53,7 +53,7 @@ def ordinateur_choisit_contenaire_et_joue(compteur, table, lst_fabrique, motif, 
         if premier_contenaire==table:
             rang1=ordinateur_choisit_rang_table(table)
         else :
-            rang1=ordinateur_choisit_rang_fabrique()
+            rang1=ordinateur_choisit_rang_fabrique(len(lst_fabrique))
         second_contenaire=ordinateur_choisit_contenaire_2(motif, plancher)
             
         if type(second_contenaire) == type(tuple()): 
@@ -63,9 +63,6 @@ def ordinateur_choisit_contenaire_et_joue(compteur, table, lst_fabrique, motif, 
         else:
             retour_joueur_joue=joueur_joue(premier_contenaire, second_contenaire, plancher,rang1[0],rang1[1],rang1[2]) 
             #si la fonction ne ressort pas False ,on fait jouer le joueur suivant,sinon on refait jouer le meme joueur car le coup n'est pas permis
-        
-                    
-
         
         if retour_joueur_joue!=False:       #si l'ordinateur a fait un coup correcte ...
             table+=retour_joueur_joue

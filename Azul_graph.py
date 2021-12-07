@@ -50,33 +50,33 @@ def dessine_plateau(lst_fabrique,table,liste_donnee_joueur):
 
 def dessine_fabrique_et_table(lst_fabrique,table):
 
-    dessine_fabrique(lst_fabrique,100,0)
+    dessine_fabrique(lst_fabrique,0,0)
     dessine_table(table, 300, 450)
 
 def dessine_fond():
     rectangle(0, 0, 1200, 1000,"","grey")
     
 def dessine_une_fabrique(fabrique,ax,ay,n):
-    bx=ax+40
-    by=ay+40
+    bx=ax+30
+    by=ay+30
     a=ax    #valeur memoire pour revenir a la ligne
     b=bx    #valeur memoire pour revenir a la ligne    
     
     for i in range(2):
-        ay=ay+40
-        by=by+40
+        ay=ay+30
+        by=by+30
         for e in range(2):
             if e==0 and i==0:
                 cercle(bx, by, sqrt(((bx-ax)**2)*2))
             rectangle(ax,ay,bx,by,"black",couleur_tuiles(fabrique[n][i][e])) 
-            ax=ax+40
-            bx=bx+40
+            ax=ax+30
+            bx=bx+30
         ax=a
         bx=b
     
 
 def dessine_fabrique(fabrique,ax,ay):
-    decalage=170
+    decalage=110
     
     for i in range(len(fabrique)):      
         dessine_une_fabrique(fabrique, ax+decalage*(i+1), ay,i)
@@ -161,21 +161,21 @@ def dessine_plancher(plancher,ax,ay):
 #sinon la valeur est un tuple                   #
 #################################################
 def detecte_co_souris_une_fabrique(fabrique,ax,ay,n,coordonne):
-    bx=ax+40
-    by=ay+40
+    bx=ax+30
+    by=ay+30
     a=ax    #valeur memoire pour revenir a la ligne
     b=bx    #valeur memoire pour revenir a la ligne    
     position_souris=-1
     for i in range(2):
-        ay=ay+40
-        by=by+40
+        ay=ay+30
+        by=by+30
         for e in range(2):
             if ax<coordonne[0] and coordonne[0]<bx and ay<coordonne[1] and coordonne[1]<by:
                 position_souris= (n,i,e)
                 rectangle(ax,ay,bx,by,"white",couleur_tuiles(fabrique[i][e]))
                 
-            ax=ax+40
-            bx=bx+40
+            ax=ax+30
+            bx=bx+30
         ax=a
         bx=b
     return position_souris
@@ -186,7 +186,7 @@ def detecte_co_souris_fabrique(fabrique,ax,ay,coordonne):
     Renvoie la cases touché par la souris ou 0
     
     '''
-    decalage=170
+    decalage=110
     pos_souris=-1
     
     for i in range(len(fabrique)):      # !!!
