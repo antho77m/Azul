@@ -51,46 +51,55 @@ def savepart(xa,ya):
     rectangle(xa-15,ya-15,xb,yb-5,couleur="pink")
     
 
-def select_type_j1():
+def select_type_j1(lst):
     while True :
         joueur_ia1=attente_clic() #sensé etre les coordoné de la case IA du joureur choisie
         joueur_simple1=attente_clic() #sensé etre les coordoné de la case joueur sans IA du joureur choisie
         if joueur_ia1==joueur_ia1: 
-            return joueur_ia1
+            lst.append("o")
+            return lst
         if joueur_simple1==joueur_simple1:
-            return joueur_simple1
+            lst.append("j")
+            return lst
 
-def select_type_j2():
+def select_type_j2(lst):
     while True :
         joueur_ia2=attente_clic()#idem
         joueur_simple2=attente_clic()#idem
         if joueur_ia2==joueur_ia2:
-            return joueur_ia2
+            lst.append("o")
+            return lst
         if joueur_simple2==joueur_simple2:
-            return joueur_simple2
+            lst.append("j")
+            return lst
 
-def select_type_j3():
+def select_type_j3(lst):
     while True :
         joueur_ia3=attente_clic()
         joueur_simple3=attente_clic()
         if joueur_ia3==joueur_ia3:
-            return joueur_ia3
+            lst.append("o")
+            return lst
         if joueur_simple3==joueur_simple3:
-            return joueur_simple3
+            lst.append("j")
+            return lst
 
 
-def select_type_j4():
+def select_type_j4(lst):
     while True :
         joueur_ia4=attente_clic()
         joueur_simple4=attente_clic()
         if joueur_ia4==joueur_ia4:
-            return joueur_ia4
+            lst.append("o")
+            return lst
         if joueur_simple4==joueur_simple4:
-            return joueur_simple4
+            lst.append("j")
+            return lst
 
 if __name__ == '__main__':
 
     cree_fenetre(1000,600)
+    lst_j=[]
     titrejeux()
     w=125
     jouer(790,500)
@@ -98,16 +107,16 @@ if __name__ == '__main__':
     for i in range(4):
         colonne_joueur(i,w,150,"blue")
         if i==0:
-            select_type_j1()
+            select_type_j1(lst_j)
             colonne_joueur(i,w,150,"green")
         if i==1:
-            select_type_j2()
+            select_type_j2(lst_j)
             colonne_joueur(i,w,150,"green")
         if i==2:
-            select_type_j3()
+            select_type_j3(lst_j)
             colonne_joueur(i,w,150,"green")
         if i==3:
-            select_type_j4()
+            select_type_j4(lst_j)
             colonne_joueur(i,w,150,"green")
         w=w+200
 
