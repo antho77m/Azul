@@ -43,7 +43,7 @@ def main():
                                                                 liste_donnee_joueur[joueur]['plancher'],\
                                                                 liste_donnee_joueur[joueur]['mosaique'])
         compteur = qui_commence(liste_donnee_joueur)
-        action_fin_manche(liste_donnee_joueur)
+        action_fin_manche(liste_donnee_joueur,sac_tuile,lst_fabrique)
         dessine_plateau(lst_fabrique,table,liste_donnee_joueur)
 
     attente_clic()

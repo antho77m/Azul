@@ -1,4 +1,7 @@
 from Azul_sys_avant_jeu import initialisation_plancher
+from Azul_sys_avant_jeu import preparation_sac_tuile
+from random import shuffle
+
 
 def ligne_complete(ligne):
     for tuile in ligne:
@@ -13,8 +16,6 @@ def verif_ligne_mosaique_complete(mosaique):
     return False
 
 def condition_fin(sac_tuile,donnee_joueur):
-    if not sac_tuile:
-        return True
     for joueur in donnee_joueur:
         if verif_ligne_mosaique_complete(joueur['mosaique']):
             return True
@@ -161,13 +162,42 @@ def compte_point_joueur(point_mosaique,plancher,point_plancher_manche_precedente
 
     return score
 
+def compte_tuile_placer_dans_motif(motif,tuile_place):
+    for ligne in motif:
+        if ligne[0]!=0:
+            tuile_place[ligne[0]]+=ligne.count(ligne[0])
 
-def action_fin_manche(donnee_joueur):
+    
+
+def compte_tuile_placer_dans_mosaique(mosaique,tuile_place):
+    for ligne in mosaique:
+        for e in ligne:
+            if tuile_remplie(e):
+                tuile_place[e]+=1
+
+def compte_tuile_deja_placer_dans_plateau(donnee_joueur,tuile_place):
+    
+
+    for joueur in donnee_joueur:
+        compte_tuile_placer_dans_motif(joueur['motif'],tuile_place)
+        compte_tuile_placer_dans_mosaique(joueur['mosaique'],tuile_place)
+
+def compte_tuile_sac(sac_tuile,tuile_hors_sac):
+    for e in range(1,6):
+        tuile_hors_sac[e]+=sac_tuile.count(e)
+
+def remise_tuiles_dans_sac(sac_tuile,tuile_hors_sac):
+    
+    
+    for j in range(1,6):
+        for i in range(20-tuile_hors_sac[j]):
+            sac_tuile.append(j)
+    shuffle(sac_tuile)  
+
+def action_fin_manche(donnee_joueur,sac_tuile,lst_fabrique):
     '''
     fonction réalisant les différentes actions a faire sur les joueur a la fin d'une manche.
     '''
-
-
     for joueur in donnee_joueur:
         #enleve les ligne motif pleine
         action_motif_joueur(joueur['motif'], joueur['mosaique'])
@@ -177,3 +207,10 @@ def action_fin_manche(donnee_joueur):
         joueur['point_mosaique_manche_pre']+=compte_point_mosaique(joueur['mosaique'],joueur['mosaique_manche_pre'])
         joueur['plancher']=initialisation_plancher()
 
+    if len(sac_tuile)<len(lst_fabrique)*4:
+        tuile_hors_sac=dict()
+        for e in range(5):
+            tuile_hors_sac[e+1]=0
+        compte_tuile_deja_placer_dans_plateau(donnee_joueur,tuile_hors_sac)
+        compte_tuile_sac(sac_tuile,tuile_hors_sac)
+        remise_tuiles_dans_sac(sac_tuile,tuile_hors_sac)
