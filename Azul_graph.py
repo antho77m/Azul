@@ -30,6 +30,9 @@ def couleur_tuiles(tuile): #chaque fonction dessins utilise cette fonctions pour
 # de chaque element (sauf les ligne motif) #
 ############################################
 def dessine_plateau(lst_fabrique,table,liste_donnee_joueur):
+    ''' 
+    dessine le plateau
+    '''
     dessine_fond()
 
     dessine_fabrique_et_table(lst_fabrique, table)
@@ -49,14 +52,22 @@ def dessine_plateau(lst_fabrique,table,liste_donnee_joueur):
     mise_a_jour()
 
 def dessine_fabrique_et_table(lst_fabrique,table):
-
+    ''' 
+    dessine la fabrique et la table (les tuiles au centre )
+    '''
     dessine_fabrique(lst_fabrique,0,0)
     dessine_table(table, 300, 450)
 
 def dessine_fond():
+    ''' 
+    dessine un fond gris
+    '''
     rectangle(0, 0, 1200, 1000,"","grey")
     
 def dessine_une_fabrique(fabrique,ax,ay,n):
+    '''
+    dessine une fabrique
+    '''
     bx=ax+30
     by=ay+30
     a=ax    #valeur memoire pour revenir a la ligne
@@ -76,6 +87,9 @@ def dessine_une_fabrique(fabrique,ax,ay,n):
     
 
 def dessine_fabrique(fabrique,ax,ay):
+    ''' 
+    dessine le nombre de fabrique qu'il faut
+    '''
     decalage=110
     
     for i in range(len(fabrique)):      
@@ -83,6 +97,9 @@ def dessine_fabrique(fabrique,ax,ay):
     
 
 def dessine_mosaique(mosaique,ax,ay):
+    ''' 
+    dessine la mosaique (l'endroit qui est a droite des lignes motif)
+    '''
     bx=ax+40
     by=ay+40
     a=ax    #valeur memoire pour revenir a la ligne
@@ -100,6 +117,9 @@ def dessine_mosaique(mosaique,ax,ay):
         bx=b
     
 def dessine_table(table,ax,ay):
+    ''' 
+    dessine les tuiles sur la table (le centre du plateau)
+    '''
     bx=ax+40
     by=ay+40
     a=ax        #memoire pour revenir a la ligne
@@ -117,6 +137,9 @@ def dessine_table(table,ax,ay):
         bx=bx+40
         
 def dessine_score_joueur(xa,ya,score,):
+    ''' 
+    dessine le score du joueur
+    '''
     sj="score : " + str(score)
     texte(xa,ya,sj,taille=12)
 
@@ -146,6 +169,9 @@ def dessine_motif_et_score(motif,ax,ay,score):
         bx=b
 
 def dessine_plancher(plancher,ax,ay):
+    ''' 
+    dessine le plancher
+    '''
     bx=ax+50
     by=ay+50
     for i in range(7):

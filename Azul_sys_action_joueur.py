@@ -138,7 +138,6 @@ def joueur_joue(contenaire_1,contenaire_2,plancher,n,i,j,ligne_mosaique=[]):
         complete_plancher(plancher, val_tuile_select, nbr_restant)
         supprime_toute_val_contenaire(contenaire_1,val_tuile_select)
         
-
         return []    
     return False
 

@@ -1,4 +1,8 @@
 from random import shuffle
+''' 
+module repertoriant la majorité des fonctions utilisé avant le lancement de la partie 
+'''
+
 
 def initialisation_plancher():
     ''' 
