@@ -189,7 +189,7 @@ def detecte_co_souris_fabrique(fabrique,ax,ay,coordonne):
     decalage=110
     pos_souris=-1
     
-    for i in range(len(fabrique)):      # !!!
+    for i in range(len(fabrique)):      
         a=detecte_co_souris_une_fabrique(fabrique[i],ax+decalage*(i+1), ay,i,coordonne)
         if a!=-1 :
             pos_souris=a

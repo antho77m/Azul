@@ -46,15 +46,15 @@ def titrejeux():
 def savepart(xa,ya):
     yb=ya+60
     xb=xa+300
-    j="Sauvgarder une partite"
+    j="Charger une partie"
     texte(xa,ya,j,taille=20)
     rectangle(xa-15,ya-15,xb,yb-5,couleur="pink")
     
 
 def select_type_j1(lst):
     while True :
-        joueur_ia1=attente_clic() #sensé etre les coordoné de la case IA du joureur choisie
-        joueur_simple1=attente_clic() #sensé etre les coordoné de la case joueur sans IA du joureur choisie
+        joueur_ia1=attente_clic() #sensé etre les coordoné de la case IA du joueur choisie
+        joueur_simple1=attente_clic() #sensé etre les coordoné de la case joueur sans IA du joueur choisie
         if joueur_ia1==joueur_ia1: 
             lst.append("o")
             return lst

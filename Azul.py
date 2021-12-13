@@ -7,17 +7,20 @@ from Azul_sys import *
 def main():
     
     #initialisation
-    nombre_joueur=demande_nombre_joueur()
 
-    liste_donnee_joueur=initialisation_donnees_joueurs(nombre_joueur)
+    if demande_charger_partie() and fichier_existe():
+        
+        nombre_joueur,liste_donnee_joueur,sac_tuile,compteur= charge_donnee()
+    else:
+        nombre_joueur=demande_nombre_joueur()
 
-    sac_tuile=preparation_sac_tuile()
-    compteur=0
+        liste_donnee_joueur=initialisation_donnees_joueurs(nombre_joueur)
+
+        sac_tuile=preparation_sac_tuile()
+        compteur=0
     #fin initialisation
-    #debut premier dessinage
-    cree_fenetre(1200,1000)
 
-    #fin dessinage
+    cree_fenetre(1200,1000)
     
     while not condition_fin(sac_tuile,liste_donnee_joueur):
         table=initialisation_table()
@@ -45,7 +48,8 @@ def main():
         compteur = qui_commence(liste_donnee_joueur)
         action_fin_manche(liste_donnee_joueur,sac_tuile,lst_fabrique)
         dessine_plateau(lst_fabrique,table,liste_donnee_joueur)
-
+        sauvegarde(nombre_joueur,liste_donnee_joueur,sac_tuile,compteur)
+    suppression_sauvegarde()
     attente_clic()
     ferme_fenetre()
 
