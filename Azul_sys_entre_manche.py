@@ -180,12 +180,19 @@ def score_tuile(mosaique_manche_pre,i,j):
     ''' 
     compte le score obtenue grace a une nouvelle tuile
     '''
-    score=1
+    score=0
+    
     score+=calcul_score_tuile_droit(mosaique_manche_pre, i+1, j)
     score+=calcul_score_tuile_gauche(mosaique_manche_pre, i-1, j)
-    score+=calcul_score_tuile_bas(mosaique_manche_pre, i, j+1)
-    score+=calcul_score_tuile_haut(mosaique_manche_pre, i, j-1)
-    return score
+
+    score_bis=0
+
+    score_bis+=calcul_score_tuile_bas(mosaique_manche_pre, i, j+1)
+    score_bis+=calcul_score_tuile_haut(mosaique_manche_pre, i, j-1)
+
+    if score!=0 and score_bis !=0:  # si tuile adjacente en haut et en bas ...
+        return score+score_bis+2
+    return score+score_bis+1
 
 def compte_point_mosaique(mosaique,mosaique_manche_pre):
     ''' 
@@ -220,8 +227,6 @@ def compte_tuile_placer_dans_motif(motif,tuile_place):
     for ligne in motif:
         if ligne[0]!=0:
             tuile_place[ligne[0]]+=ligne.count(ligne[0])
-
-    
 
 def compte_tuile_placer_dans_mosaique(mosaique,tuile_place):
     '''  
