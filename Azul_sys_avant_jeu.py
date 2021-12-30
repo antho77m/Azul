@@ -106,7 +106,7 @@ def preparation_usines(sac_tuile,nombre_joueur):
     >>> preparation_usines([2,3,5,4,1,1,1,2,3,5,6,6,8,4,5,1,2,3,5,5])
     [[[5, 5], [3, 2]], [[1, 5], [4, 8]], [[6, 6], [5, 3]], [[2, 1], [1, 1]], [[4, 5], [3, 2]]]
     '''
-    lst_nombre_usine=[0,5,7,9]
+    lst_nombre_usine=[5,5,7,9]
     nbr_usine=lst_nombre_usine[nombre_joueur-1]
     lst_usine=[]
     for n in range(nbr_usine):
@@ -135,6 +135,9 @@ def initialisation_donnees_joueurs(nombre_joueur):
     retourne une liste de dictionnaire,un dictionnaire regroupe
     toute les information d'un seul joueur
     '''
+    if nombre_joueur==1:
+        nombre_joueur+=1
+        variante_solo=True
     lst_coord_plancher=[(100,380),(800,380),(100,720),(800,720)]
     lst_coord_mosaique=[(250,120),(950,120),(250,460),(950,460)]
     lst_coord_motif=[(200,120),(900,120),(200,460),(900,460)]       #liste des coordonné a utilisé pour les fonction dessin,selon les joueur
@@ -149,7 +152,12 @@ def initialisation_donnees_joueurs(nombre_joueur):
         donnee_joueur['motif']=initialisation_motif()
         donnee_joueur['mosaique']=initialisation_mosaique()
         donnee_joueur['mosaique_manche_pre']=initialisation_mosaique()
-        donnee_joueur['type_joueur']=demande_joueur_ordinateur(i+1)
+        if variante_solo and i==0:
+            donnee_joueur['type_joueur']=demande_joueur_ordinateur(i+1)
+        elif variante_solo:
+            donnee_joueur['type_joueur']="o"
+        else:
+            donnee_joueur['type_joueur']=demande_joueur_ordinateur(i+1)
         donnee_joueur['score']=0
         donnee_joueur['point_plancher_manche_pre']=0
         donnee_joueur['point_mosaique_manche_pre']=0

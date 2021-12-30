@@ -13,9 +13,8 @@ def main():
         nombre_joueur,liste_donnee_joueur,sac_tuile,compteur= charge_donnee()
     else:
         nombre_joueur=demande_nombre_joueur()
-
         liste_donnee_joueur=initialisation_donnees_joueurs(nombre_joueur)
-
+        
         sac_tuile=preparation_sac_tuile()
         compteur=0
     #fin initialisation
@@ -27,24 +26,37 @@ def main():
 
         lst_fabrique=preparation_usines(sac_tuile,nombre_joueur)
         dessine_plateau(lst_fabrique,table,liste_donnee_joueur)
-
         while not detecte_fin_manche(lst_fabrique, table):
-            joueur=compteur%nombre_joueur
+            joueur=compteur%len(liste_donnee_joueur)
             compte_point_tout_joueur(liste_donnee_joueur)
             dessine_plateau(lst_fabrique, table, liste_donnee_joueur)
-            
-            if liste_donnee_joueur[joueur]['type_joueur']=="j":
-                compteur=joueur_choisit_contenaire_et_joue(compteur, table, lst_fabrique,\
-                                                            liste_donnee_joueur[joueur]['mosaique'],\
-                                                            liste_donnee_joueur[joueur]['motif'],\
-                                                            liste_donnee_joueur[joueur]['coord_motif'],\
-                                                            liste_donnee_joueur[joueur]['plancher'],\
-                                                            liste_donnee_joueur[joueur]['coord_plancher'])
-            else :
-                compteur=ordinateur_choisit_contenaire_et_joue(compteur, table, lst_fabrique,\
+            if nombre_joueur==1:    #variante solo du jeu 
+
+                if liste_donnee_joueur[joueur]['type_joueur']=="j":
+                    compteur=joueur_choisit_contenaire_et_joue_solo(compteur, table, lst_fabrique,\
+                                                                liste_donnee_joueur[joueur]['mosaique'],\
                                                                 liste_donnee_joueur[joueur]['motif'],\
+                                                                liste_donnee_joueur[joueur]['coord_motif'],\
                                                                 liste_donnee_joueur[joueur]['plancher'],\
-                                                                liste_donnee_joueur[joueur]['mosaique'])
+                                                                liste_donnee_joueur[joueur]['coord_plancher'])
+                else :
+                    compteur=ordinateur_choisit_contenaire_et_joue_solo(compteur, table, lst_fabrique,\
+                                                                    liste_donnee_joueur[joueur]['motif'],\
+                                                                    liste_donnee_joueur[joueur]['plancher'],\
+                                                                    liste_donnee_joueur[joueur]['mosaique'])
+            else:
+                if liste_donnee_joueur[joueur]['type_joueur']=="j":
+                    compteur=joueur_choisit_contenaire_et_joue(compteur, table, lst_fabrique,\
+                                                                liste_donnee_joueur[joueur]['mosaique'],\
+                                                                liste_donnee_joueur[joueur]['motif'],\
+                                                                liste_donnee_joueur[joueur]['coord_motif'],\
+                                                                liste_donnee_joueur[joueur]['plancher'],\
+                                                                liste_donnee_joueur[joueur]['coord_plancher'])
+                else :
+                    compteur=ordinateur_choisit_contenaire_et_joue(compteur, table, lst_fabrique,\
+                                                                    liste_donnee_joueur[joueur]['motif'],\
+                                                                    liste_donnee_joueur[joueur]['plancher'],\
+                                                                    liste_donnee_joueur[joueur]['mosaique'])
         compteur = qui_commence(liste_donnee_joueur)
         action_fin_manche(liste_donnee_joueur,sac_tuile,lst_fabrique)
         dessine_plateau(lst_fabrique,table,liste_donnee_joueur)
