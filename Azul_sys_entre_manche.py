@@ -23,15 +23,42 @@ def verif_ligne_mosaique_complete(mosaique):
         if ligne_complete(ligne):
             return True
     return False
+def compte_ligne_mosaique_complete(mosaique):
+    compteur=0
+    for ligne in mosaique:
+        if ligne_complete(ligne):
+            compteur+=1
+    return compteur
 
-def condition_fin(sac_tuile,donnee_joueur):
+def cinq_tuiles_meme_couleur(mosaique):
+    compte_tuile=dict()
+    for ligne in mosaique:
+        for tuile in ligne:
+            if tuile_remplie(tuile):
+                if not tuile in compte_tuile:
+                    compte_tuile[tuile]=1
+                else:
+                    compte_tuile[tuile]+=1
+    for nombre in compte_tuile.values():
+        if nombre==5:
+            return True
+    return False
+
+def condition_fin(sac_tuile,donnee_joueur,nbr_joueur):
     ''' 
     verifie qu'une condition de fin est réalisé
     '''
-    for joueur in donnee_joueur:
-        if verif_ligne_mosaique_complete(joueur['mosaique']):
-            return True
+    if nbr_joueur!=1:
+        for joueur in donnee_joueur:
+            if verif_ligne_mosaique_complete(joueur['mosaique']):
+                return True
+    else:
+        compteur_ligne_pleine=compte_ligne_mosaique_complete(donnee_joueur[0]['mosaique'])
+        condition_cinq_tuile= cinq_tuiles_meme_couleur(donnee_joueur[0]['mosaique'])
+        return condition_cinq_tuile and compteur_ligne_pleine>=3
+        
 
+        cinq_tuile=compte_tuile_dans_mosaique()
     return False
 
 def fabrique_vide(lst_fabrique):

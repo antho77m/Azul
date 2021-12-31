@@ -21,7 +21,7 @@ def main():
 
     cree_fenetre(1200,1000)
     
-    while not condition_fin(sac_tuile,liste_donnee_joueur):
+    while not condition_fin(sac_tuile,liste_donnee_joueur,nombre_joueur):
         table=initialisation_table()
 
         lst_fabrique=preparation_usines(sac_tuile,nombre_joueur)
@@ -57,10 +57,14 @@ def main():
                                                                     liste_donnee_joueur[joueur]['motif'],\
                                                                     liste_donnee_joueur[joueur]['plancher'],\
                                                                     liste_donnee_joueur[joueur]['mosaique'])
-        compteur = qui_commence(liste_donnee_joueur)
+        if nombre_joueur==1:
+            compteur=1
+        else:
+            compteur = qui_commence(liste_donnee_joueur)
         action_fin_manche(liste_donnee_joueur,sac_tuile,lst_fabrique)
         dessine_plateau(lst_fabrique,table,liste_donnee_joueur)
         sauvegarde(nombre_joueur,liste_donnee_joueur,sac_tuile,compteur)
+
     suppression_sauvegarde()
     attente_clic()
     ferme_fenetre()

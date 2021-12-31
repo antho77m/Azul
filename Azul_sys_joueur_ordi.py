@@ -79,6 +79,7 @@ def ordinateur_choisit_contenaire_et_joue_solo(compteur, table, lst_fabrique, mo
     #l'ordinateur choisit quoi choisir
     sleep(0.5)
     while (True):
+
         rang1=0
         premier_contenaire=ordinateur_choisit_contenaire_1(table,lst_fabrique)
         if premier_contenaire==table:
@@ -86,13 +87,13 @@ def ordinateur_choisit_contenaire_et_joue_solo(compteur, table, lst_fabrique, mo
         else :
             rang1=ordinateur_choisit_rang_fabrique(len(lst_fabrique))
         second_contenaire=ordinateur_choisit_contenaire_2(motif, plancher)
-            
+        boite=[0]*7     #l'ordinateur n'a pas de malus dans le mode solo,pour recicler le code on fait donc un plancher n'ayant aucun rapport avec celui utilisé d'habitude
         if type(second_contenaire) == type(tuple()): 
             #on execute se bout si le contenaire choisit est une ligne motif
-            retour_joueur_joue=joueur_joue(premier_contenaire, second_contenaire[0], plancher,rang1[0],rang1[1],rang1[2],mosaique[second_contenaire[1]] ) 
+            retour_joueur_joue=joueur_joue(premier_contenaire, second_contenaire[0], boite,rang1[0],rang1[1],rang1[2],mosaique[second_contenaire[1]] ) 
             #si la fonction ne ressort pas False ,on fait jouer le joueur suivant,sinon on refait jouer le meme joueur car le coup n'est pas permis
         else:
-            retour_joueur_joue=joueur_joue(premier_contenaire, second_contenaire, plancher,rang1[0],rang1[1],rang1[2]) 
+            retour_joueur_joue=joueur_joue(premier_contenaire, second_contenaire, boite,rang1[0],rang1[1],rang1[2]) 
             #si la fonction ne ressort pas False ,on fait jouer le joueur suivant,sinon on refait jouer le meme joueur car le coup n'est pas permis
         
         if retour_joueur_joue!=False:       #si l'ordinateur a fait un coup correcte ...
