@@ -4,6 +4,7 @@ from Azul_sys import *
 #remarque :
 #Pour annuler le premier element choisit,il suffit de cliquer autre part pour le deselectionner
 
+
 def main():
     
     #initialisation
@@ -31,7 +32,6 @@ def main():
             compte_point_tout_joueur(liste_donnee_joueur)
             dessine_plateau(lst_fabrique, table, liste_donnee_joueur)
             if nombre_joueur==1:    #variante solo du jeu 
-
                 if liste_donnee_joueur[joueur]['type_joueur']=="j":
                     compteur=joueur_choisit_contenaire_et_joue_solo(compteur, table, lst_fabrique,\
                                                                 liste_donnee_joueur[joueur]['mosaique'],\
@@ -42,7 +42,6 @@ def main():
                 else :
                     compteur=ordinateur_choisit_contenaire_et_joue_solo(compteur, table, lst_fabrique,\
                                                                     liste_donnee_joueur[joueur]['motif'],\
-                                                                    liste_donnee_joueur[joueur]['plancher'],\
                                                                     liste_donnee_joueur[joueur]['mosaique'])
             else:
                 if liste_donnee_joueur[joueur]['type_joueur']=="j":
@@ -58,13 +57,13 @@ def main():
                                                                     liste_donnee_joueur[joueur]['plancher'],\
                                                                     liste_donnee_joueur[joueur]['mosaique'])
         if nombre_joueur==1:
-            compteur=1
+            compteur=1          #dans la variante solo,l'ordinateur commence toujours
         else:
             compteur = qui_commence(liste_donnee_joueur)
         action_fin_manche(liste_donnee_joueur,sac_tuile,lst_fabrique)
         dessine_plateau(lst_fabrique,table,liste_donnee_joueur)
         sauvegarde(nombre_joueur,liste_donnee_joueur,sac_tuile,compteur)
-
+    affichage_joueur_gagne(liste_donnee_joueur)
     suppression_sauvegarde()
     attente_clic()
     ferme_fenetre()

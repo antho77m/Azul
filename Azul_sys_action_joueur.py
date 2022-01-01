@@ -36,7 +36,7 @@ def complete_plancher(plancher,valeur,nombre_a_rajouter):
     [2, 2, 3, 3, 0, 0, 0]
     '''
     nombre_rajouter=0
-    for i in range(7):
+    for i in range(len(plancher)):
         if nombre_a_rajouter==nombre_rajouter:
             break
         if plancher[i]==0:
