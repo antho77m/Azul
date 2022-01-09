@@ -129,16 +129,14 @@ def demande_nombre_joueur():
     
     return int(input())
 
-def initialisation_donnees_joueurs(nombre_joueur):
+def initialisation_donnees_joueurs(donnee_joueur_ordi):
     ''' 
     initialise et regroupe les différente données des joueurs.
     retourne une liste de dictionnaire,un dictionnaire regroupe
     toute les information d'un seul joueur
     '''
-    variante_solo=False
-    if nombre_joueur==1:
-        nombre_joueur+=1
-        variante_solo=True
+    if len(donnee_joueur_ordi)==1:
+        donnee_joueur_ordi.append("o")
 
     lst_coord_plancher=[(100,380),(800,380),(100,720),(800,720)]
     lst_coord_mosaique=[(250,120),(950,120),(250,460),(950,460)]
@@ -146,7 +144,7 @@ def initialisation_donnees_joueurs(nombre_joueur):
 
     lst_donnee_joueur=[]
     
-    for i in range(nombre_joueur):
+    for i in range(len(donnee_joueur_ordi)):
         donnee_joueur=dict()
         donnee_joueur['coord_plancher']=lst_coord_plancher[i]
         donnee_joueur['coord_mosaique']=lst_coord_mosaique[i]
@@ -158,12 +156,7 @@ def initialisation_donnees_joueurs(nombre_joueur):
         donnee_joueur['score']=0
         donnee_joueur['point_plancher_manche_pre']=0
         donnee_joueur['point_mosaique_manche_pre']=0
-        if variante_solo and i==0:
-            donnee_joueur['type_joueur']="j"
-        elif variante_solo:
-            donnee_joueur['type_joueur']="o"
-        else:
-            donnee_joueur['type_joueur']=demande_joueur_ordinateur(i+1)
+        donnee_joueur['type_joueur']=donnee_joueur_ordi[i]
         lst_donnee_joueur.append(donnee_joueur)
 
     return lst_donnee_joueur

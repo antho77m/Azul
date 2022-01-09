@@ -1,3 +1,4 @@
+from Azul_sys_memoire import fichier_existe
 from upemtk import *
 
 def colonne_joueur(num,xa,ya,couleurj):
@@ -51,94 +52,99 @@ def savepart(xa,ya):
     rectangle(xa-15,ya-15,xb-50,yb-5,couleur="pink")
     
 
-def select_type_j1(lst):
-    while True :
-        mise_a_jour()
-        x, y, z = attente_clic()
-        if x<=120+200 and x>=150-2 and y<=250+200-5 and y>=180+4: 
-            lst.append("j")
-            return True
-        if x<=120+200 and x>=150-2+60 and y<=250+200-5 and y>=180+4+60:          
-            lst.append("o")
-            return True
-        else:
-            return False
+def select_type_j1(lst,x,y):
+    if x>=120 and x<=245 and y>=210 and y<=243: 
+        lst.append("j")
+        return 
+    if x>=120 and x<=245 and y>=270 and y<=305:          
+        lst.append("o")
+        return 
 
 
-def select_type_j2(lst):
-    x, y, z = attente_clic()
-    while True :
-        if x>=120+200+200 and x<=150-2 and y>=250+200+200-5 and y<=180+4: 
-            lst.append("j")
-            return True
-        if x>=120+200+200 and x<=150-2+60 and y>=250+200-5+200 and y<=180+4+60:          
-            lst.append("o")
-            return True
-        else:
-            return False
+def select_type_j2(lst,x,y):
+    if x>=310 and x<=430 and y>=210 and y<=240: 
+        lst.append("j")
+        return 
+    if x>=310 and x<=430 and y>=270 and y<=300:          
+        lst.append("o")
+        return 
 
-def select_type_j3(lst):
-    x, y, z = attente_clic()
-    while True :
-        if x>=120+200+200+200 and x<=150-2 and y>=250+200+200+200-5 and y<=180+4: 
-            lst.append("j")
-            return True
-        if x>=120+200+200+200 and x<=150-2+60 and y>=250+200-5+200+200 and y<=180+4+60:          
-            lst.append("o")
-            return True
-        else:
-            return False
+def select_type_j3(lst,x,y):
+    if x>=490 and x<=615 and y>=210 and y<=240: 
+        lst.append("j")
+        return 
+    if x>=490 and x<=615 and y>=270 and y<=300:          
+        lst.append("o")
+        return 
 
 
-def select_type_j4(lst):
-    x, y, z = attente_clic()
-    while True :
-        if x>=120+200+200+200+200 and x<=150-2 and y>=250+200+200+200+200-5 and y<=180+4: 
-            lst.append("j")
-            return True
-        if x>=120+200+200+200+200 and x<=150-2+60 and y>=250+200-5+200+200+200 and y<=180+4+60:          
-            lst.append("o")
-            return True
-        else:
-            return False
+def select_type_j4(lst,x,y):
+    if x>=680 and x<=800 and y>=210 and y<=240: 
+        lst.append("j")
+        return 
+    if x>=680 and x<=800 and y>=270 and y<=300:          
+        lst.append("o")
+        return 
 
-if __name__ == '__main__':
+def select_charge(x,y):
+    return 790+15-2>=x and x<=790-5 and 500+60+4>=y and y>=500
 
+def select_jouer(x,y):
+    return  x>=792 and x<=943 and y <=650 and y >=502
+
+#792 502
+#943 560
+
+
+def menu_selection():
+    
     cree_fenetre(1000,600)
     lst_j=[]
     lst_jouer=[]
     titrejeux()
     jouer(790,500)
-    savepart(50,510)
-    mise_a_jour()
+    if fichier_existe():
+        savepart(50,510)
+    rectangle(790,500,790+150,500+60)
+    x=0
+    y=0
+    colonne_joueur(0,125,150,"blue")
+    
+    
     while True:
+
+        x, y, z = attente_clic()
+        
+        if select_charge(x,y) and fichier_existe():
+            ferme_fenetre()
+            return 
+        if select_jouer(x,y) and len(lst_jouer)!=0:
+            ferme_fenetre()
+            return lst_jouer
+
         if len(lst_jouer)==0:
             colonne_joueur(0,125,150,"blue")
-            mise_a_jour()
-            select_type_j1(lst_jouer)
-            
+            select_type_j1(lst_jouer,x,y)
+            continue
         if len(lst_jouer)==1:
             colonne_joueur(0,125,150,"green")
-            colonne_joueur(1,125*2,150,"blue")
-            select_type_j2(lst_jouer)
+            colonne_joueur(1,125*2+60,150,"blue")
+            select_type_j2(lst_jouer,x,y)
+            continue
         if len(lst_jouer)==2:
-            colonne_joueur(1,125*2,150,"green")
-            colonne_joueur(2,125*3,150,"blue")
-            select_type_j3(lst_jouer)
+            colonne_joueur(1,125*2+60,150,"green",)
+            colonne_joueur(2,125*3+60*2,150,"blue",)
+            select_type_j3(lst_jouer,x,y)
+            continue 
         if len(lst_jouer)==3:
-            colonne_joueur(2,125*3,150,"green")
-            colonne_joueur(3,125*4,150,"blue")
-            select_type_j4(lst_jouer)
+            colonne_joueur(2,125*3+60*2,150,"green")
+            colonne_joueur(3,125*4+60*3,150,"blue")
+            select_type_j4(lst_jouer,x,y)
+            continue
         if len(lst_jouer)==4:
-            colonne_joueur(3,125*4,150,"green")
+            colonne_joueur(3,125*4+60*3,150,"green")
         
-
-    print(lst_jouer)
-    attente_clic()
-    ferme_fenetre()
-
-
-
-
-
-
+        
+if __name__ == '__main__':
+        print(menu_selection())
+        
