@@ -48,77 +48,97 @@ def savepart(xa,ya):
     xb=xa+300
     j="Charger une partie"
     texte(xa,ya,j,taille=20)
-    rectangle(xa-15,ya-15,xb,yb-5,couleur="pink")
+    rectangle(xa-15,ya-15,xb-50,yb-5,couleur="pink")
     
 
 def select_type_j1(lst):
     while True :
-        joueur_ia1=attente_clic() #sensé etre les coordoné de la case IA du joueur choisie
-        joueur_simple1=attente_clic() #sensé etre les coordoné de la case joueur sans IA du joueur choisie
-        if joueur_ia1==joueur_ia1: 
-            lst.append("o")
-            return lst
-        if joueur_simple1==joueur_simple1:
+        mise_a_jour()
+        x, y, z = attente_clic()
+        if x<=120+200 and x>=150-2 and y<=250+200-5 and y>=180+4: 
             lst.append("j")
-            return lst
+            return True
+        if x<=120+200 and x>=150-2+60 and y<=250+200-5 and y>=180+4+60:          
+            lst.append("o")
+            return True
+        else:
+            return False
+
 
 def select_type_j2(lst):
+    x, y, z = attente_clic()
     while True :
-        joueur_ia2=attente_clic()#idem
-        joueur_simple2=attente_clic()#idem
-        if joueur_ia2==joueur_ia2:
-            lst.append("o")
-            return lst
-        if joueur_simple2==joueur_simple2:
+        if x>=120+200+200 and x<=150-2 and y>=250+200+200-5 and y<=180+4: 
             lst.append("j")
-            return lst
+            return True
+        if x>=120+200+200 and x<=150-2+60 and y>=250+200-5+200 and y<=180+4+60:          
+            lst.append("o")
+            return True
+        else:
+            return False
 
 def select_type_j3(lst):
+    x, y, z = attente_clic()
     while True :
-        joueur_ia3=attente_clic()
-        joueur_simple3=attente_clic()
-        if joueur_ia3==joueur_ia3:
-            lst.append("o")
-            return lst
-        if joueur_simple3==joueur_simple3:
+        if x>=120+200+200+200 and x<=150-2 and y>=250+200+200+200-5 and y<=180+4: 
             lst.append("j")
-            return lst
+            return True
+        if x>=120+200+200+200 and x<=150-2+60 and y>=250+200-5+200+200 and y<=180+4+60:          
+            lst.append("o")
+            return True
+        else:
+            return False
 
 
 def select_type_j4(lst):
+    x, y, z = attente_clic()
     while True :
-        joueur_ia4=attente_clic()
-        joueur_simple4=attente_clic()
-        if joueur_ia4==joueur_ia4:
-            lst.append("o")
-            return lst
-        if joueur_simple4==joueur_simple4:
+        if x>=120+200+200+200+200 and x<=150-2 and y>=250+200+200+200+200-5 and y<=180+4: 
             lst.append("j")
-            return lst
+            return True
+        if x>=120+200+200+200+200 and x<=150-2+60 and y>=250+200-5+200+200+200 and y<=180+4+60:          
+            lst.append("o")
+            return True
+        else:
+            return False
 
 if __name__ == '__main__':
 
     cree_fenetre(1000,600)
     lst_j=[]
+    lst_jouer=[]
     titrejeux()
-    w=125
     jouer(790,500)
     savepart(50,510)
-    for i in range(4):
-        colonne_joueur(i,w,150,"blue")
-        if i==0:
-            select_type_j1(lst_j)
-            colonne_joueur(i,w,150,"green")
-        if i==1:
-            select_type_j2(lst_j)
-            colonne_joueur(i,w,150,"green")
-        if i==2:
-            select_type_j3(lst_j)
-            colonne_joueur(i,w,150,"green")
-        if i==3:
-            select_type_j4(lst_j)
-            colonne_joueur(i,w,150,"green")
-        w=w+200
+    mise_a_jour()
+    while True:
+        if len(lst_jouer)==0:
+            colonne_joueur(0,125,150,"blue")
+            mise_a_jour()
+            select_type_j1(lst_jouer)
+            
+        if len(lst_jouer)==1:
+            colonne_joueur(0,125,150,"green")
+            colonne_joueur(1,125*2,150,"blue")
+            select_type_j2(lst_jouer)
+        if len(lst_jouer)==2:
+            colonne_joueur(1,125*2,150,"green")
+            colonne_joueur(2,125*3,150,"blue")
+            select_type_j3(lst_jouer)
+        if len(lst_jouer)==3:
+            colonne_joueur(2,125*3,150,"green")
+            colonne_joueur(3,125*4,150,"blue")
+            select_type_j4(lst_jouer)
+        if len(lst_jouer)==4:
+            colonne_joueur(3,125*4,150,"green")
+        
 
+    print(lst_jouer)
     attente_clic()
     ferme_fenetre()
+
+
+
+
+
+

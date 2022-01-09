@@ -145,6 +145,7 @@ def initialisation_donnees_joueurs(nombre_joueur):
     lst_coord_motif=[(200,120),(900,120),(200,460),(900,460)]       #liste des coordonné a utilisé pour les fonction dessin,selon les joueurs
 
     lst_donnee_joueur=[]
+    
     for i in range(nombre_joueur):
         donnee_joueur=dict()
         donnee_joueur['coord_plancher']=lst_coord_plancher[i]
@@ -163,6 +164,6 @@ def initialisation_donnees_joueurs(nombre_joueur):
             donnee_joueur['type_joueur']="o"
         else:
             donnee_joueur['type_joueur']=demande_joueur_ordinateur(i+1)
-        
         lst_donnee_joueur.append(donnee_joueur)
+
     return lst_donnee_joueur

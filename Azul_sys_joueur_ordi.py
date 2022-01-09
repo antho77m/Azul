@@ -87,7 +87,7 @@ def ordinateur_choisit_contenaire_et_joue_solo(compteur, table, lst_fabrique, mo
     retourne le compteur(int)   celui si sert a faire jouer le prochain joueur
     '''
     
-    sleep(0.5)
+    #sleep(0.5)
     boite=[0]*7     #l'ordinateur n'a pas de malus dans le mode solo,pour recicler le code on fait donc un plancher n'ayant aucun rapport avec celui utilisé d'habitude
             
     while (True):

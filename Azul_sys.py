@@ -11,12 +11,21 @@ from Azul_sys_joueur_ordi import *
 from Azul_sys_memoire import *
 
 
+def ajout_numero_joueur(liste_donnee_joueur):
+    """ 
+    ajoute le numero du joueur
+    """
+    for i in range(len(liste_donnee_joueur)):
+        liste_donnee_joueur[i]["numero_joueur"]=i+1
+
 def affichage_joueur_gagne(liste_donnee_joueur):
     """ 
-    Regarde qui est le joueur qui a gagné et affiche
+    Regarde qui est le joueur qui a gagné et affiche le classement a l'écran
     """
-    joueur_gagnant=(1,liste_donnee_joueur[0]["score"])
-    for i in range(1,len(liste_donnee_joueur)):
-        if joueur_gagnant[1]<liste_donnee_joueur[i]["score"]:
-            joueur_gagnant=(i+1,liste_donnee_joueur[i]["score"])
-    print("le joueur qui a gagné est le joueur :",joueur_gagnant[0])
+    ajout_numero_joueur(liste_donnee_joueur)
+    liste_donnee_joueur=sorted(liste_donnee_joueur,key=lambda liste_donnee_joueur:liste_donnee_joueur["score"],reverse=True)
+    texte(470, 370, "classement :",taille=15)
+    for compteur,e in enumerate(liste_donnee_joueur) :
+        affichage="joueur "+str(e["numero_joueur"])+ ":   "+ str(e["score"]) + " points"
+        texte(470, 400+(30*compteur), affichage,taille=12)
+    

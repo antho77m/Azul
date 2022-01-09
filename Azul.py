@@ -64,7 +64,8 @@ def main():
         dessine_plateau(lst_fabrique,table,liste_donnee_joueur)
         sauvegarde(nombre_joueur,liste_donnee_joueur,sac_tuile,compteur)
     affichage_joueur_gagne(liste_donnee_joueur)
-    suppression_sauvegarde()
+    mise_a_jour()
+    #suppression_sauvegarde()
     attente_clic()
     ferme_fenetre()
 
