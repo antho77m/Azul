@@ -53,10 +53,10 @@ def savepart(xa,ya):
     
 
 def select_type_j1(lst,x,y):
-    if x>=120 and x<=245 and y>=210 and y<=243: 
+    if x>=120 and x<=245 and y>=210 and y<=240: 
         lst.append("j")
         return 
-    if x>=120 and x<=245 and y>=270 and y<=305:          
+    if x>=120 and x<=245 and y>=270 and y<=300:          
         lst.append("o")
         return 
 

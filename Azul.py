@@ -12,9 +12,10 @@ def main():
     if type(donnee_joueur) is type(None) :    #charge la sauvegarde
         nombre_joueur,liste_donnee_joueur,sac_tuile,compteur= charge_donnee()
     else:
-        liste_donnee_joueur=initialisation_donnees_joueurs(donnee_joueur)
         
         nombre_joueur=len(donnee_joueur)
+        liste_donnee_joueur=initialisation_donnees_joueurs(donnee_joueur)
+        
         sac_tuile=preparation_sac_tuile()
         compteur=0
     #fin initialisation
