@@ -209,7 +209,7 @@ def joueur_choisit_contenaire_et_joue_solo(compteur,table,lst_fabrique,mosaique,
         premier_choix=False
         while not premier_choix :
             coordonne_souris=attente_clic()
-            a=0
+            a=-1
             if fabrique_vide(lst_fabrique):
                 a=detecte_co_souris_table(table, 300, 450, coordonne_souris)
             b=detecte_co_souris_fabrique(lst_fabrique,0,0,coordonne_souris)
