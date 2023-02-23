@@ -1,5 +1,5 @@
 # Azul
-Projet scolaire réalisé par Gaudin Pierre et Bleuse Anthonin
+Projet scolaire réalisé par **Gaudin Pierre** et **Bleuse Anthonin**
 
 Langage utilisé : Python3
 
